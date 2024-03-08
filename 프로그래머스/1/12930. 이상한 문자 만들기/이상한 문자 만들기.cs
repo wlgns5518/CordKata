@@ -1,13 +1,26 @@
-public class Solution {
-    public string solution(string s) {
+public class Solution
+{
+    public string solution(string s)
+    {
         string answer = "";
-        int num = 0;
-        
-        for(int i = 0; i < s.Length; i++)
+        string[] sArray = s.Split(' ');
+        for(int i=0; i<sArray.Length;i++)
         {
-            answer += num % 2 == 0 ? char.ToUpper(s[i]) : char.ToLower(s[i]);
-            num = s[i] == ' ' ? 0 : num += 1;
+            for (int j = 0; j < sArray[i].Length; j++)
+            {
+                if(j%2 == 0)
+                {
+                    answer += char.ToUpper(sArray[i][j]);
+                }
+                else
+                {
+                    answer += char.ToLower(sArray[i][j]);
+                }
+            }
+            if(i != sArray.Length-1)
+                answer += ' ';
         }
+        
         return answer;
     }
 }
