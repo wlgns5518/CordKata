@@ -6,17 +6,17 @@ public class Solution
     {
         public int[] solution(int[] numbers)
         {
-            List<int> result = new List<int>();
+            HashSet<int> result = new HashSet<int>();
             int n = numbers.Length;
-            for (int i = 0; i < n; i++) {
-                for (int j = i + 1; j < n; j++) {
-                    int sum = numbers[i] + numbers[j];
-                    if (!result.Contains(sum)) {
-                        result.Add(sum);
-                    }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = i + 1; j < n; j++)
+                {
+                    result.Add(numbers[i] + numbers[j]);
                 }
             }
-            result.Sort(); // 오름차순으로 정렬
-            return result.ToArray();
+            int[] sortedResult = result.ToArray();
+            Array.Sort(sortedResult);  // 정렬
+            return sortedResult;
         }
     }
