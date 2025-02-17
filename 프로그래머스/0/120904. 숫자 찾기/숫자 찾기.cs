@@ -5,26 +5,22 @@ public class Solution {
 {
     int answer = -1;
     int numcnt = 0;
-    int x1 = 0;
-    int x2 = num;
+    int x1 = num;
     for (int i = 0; i < 7; i++)
     {
-        x1 = x2 % 10;
-        x2 = x2 / 10;
-        if (x2 == 0)
+        x1 = x1 / 10;
+        if (x1 == 0)
         {
             numcnt = i+1;
             break;
         }
     }
-    x1 = 0;
-    x2 = num;
+    x1 = num;
     int[] ints = new int[numcnt];
     for (int i=numcnt-1;i >=0;i--)
     {
-        x1 = x2 % 10;
-        x2 = x2 / 10;
-        ints[i] = x1;
+        ints[i] = x1%10;
+        x1 = x1 / 10;
         if (ints[i]==k)
             answer = i+1;
     }
