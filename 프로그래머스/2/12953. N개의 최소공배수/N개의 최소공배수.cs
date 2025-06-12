@@ -1,25 +1,27 @@
 public class Solution {
     public int solution(int[] arr)
 {
-    int answer = 0;
-    int len = arr.Length;
-    long maxValue = 1;
-    int count = 0;
-    for(int i=0;i<len;i++)
+    int lcm = arr[0];
+    for (int i = 1; i < arr.Length; i++)
     {
-        maxValue *= arr[i];
+        lcm = LCM(lcm, arr[i]);
     }
-    for(int i=1;i<=maxValue;i++)
+    return lcm;
+}
+
+private int LCM(int a, int b)
+{
+    return a * b / GCD(a, b);
+}
+
+private int GCD(int a, int b)
+{
+    while (b != 0)
     {
-        for(int j=0;j<len;j++)
-        {
-            if (i % arr[j] == 0)
-                count++;
-        }
-        if (count == len)
-            return i;
-        count = 0;
+        int temp = b;
+        b = a % b;
+        a = temp;
     }
-    return answer;
+    return a;
 }
 }
