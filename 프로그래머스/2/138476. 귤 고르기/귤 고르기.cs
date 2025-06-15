@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 public class Solution
 {
@@ -10,25 +9,27 @@ public class Solution
         var dict = new Dictionary<int, int>();
         foreach (var size in tangerine)
         {
-            if (dict.ContainsKey(size))
-                dict[size]++;
+            if (dict.TryGetValue(size, out int cnt))
+                dict[size] = cnt + 1;
             else
                 dict[size] = 1;
         }
 
-        // 개수 내림차순 정렬
-        var counts = dict.Values.OrderByDescending(x => x).ToList();
+        // Value만 배열로 추출 후 내림차순 정렬
+        int[] counts = new int[dict.Count];
+        int idx = 0;
+        foreach (var v in dict.Values)
+            counts[idx++] = v;
+        Array.Sort(counts, (a, b) => b.CompareTo(a)); // 내림차순
 
-        int kind = 0;
-        int sum = 0;
-        foreach (var cnt in counts)
+        int kind = 0, sum = 0;
+        for (int i = 0; i < counts.Length; i++)
         {
-            sum += cnt;
+            sum += counts[i];
             kind++;
             if (sum >= k)
                 break;
         }
-
         return kind;
     }
 }
