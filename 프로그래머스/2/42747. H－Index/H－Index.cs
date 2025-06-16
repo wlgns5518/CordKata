@@ -1,18 +1,22 @@
 using System;
-using System.Linq;
 
-public class Solution {
-            public int solution(int[] citations)
+public class Solution
+{
+    public int solution(int[] citations)
+    {
+        int answer = 0;
+        int n = citations.Length;
+        for (int h = 0; h <= n; h++)
         {
-            int answer = 0;
-            for (int i = citations.Max(); i > answer; i--)
+            int count = 0;
+            for (int i = 0; i < n; i++)
             {
-                if (citations.Count(e => e >= i) >= i)
-                {
-                    answer = i;
-                }
+                if (citations[i] >= h)
+                    count++;
             }
-
-            return answer;
+            if (count >= h)
+                answer = h;
         }
+        return answer;
+    }
 }
