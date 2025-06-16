@@ -1,50 +1,47 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 
-
-    public class Solution
+public class Solution
+{
+    public int solution(string s)
     {
-        public int solution(string s)
+        int answer = 0;
+        var stack = new Stack<char>();
+        var sb = new StringBuilder(s);
+
+        for (int i = 0; i < s.Length; i++)
         {
-            int answer = 0;
-            int n = s.Length;
+            if (Check(sb.ToString(), stack))
+                answer++;
 
-            for (int i = 0; i < n; i++)
-            {
-                if (IsValid(s))
-                    answer++;
-
-                // 문자열 회전
-                s = s.Substring(1) + s[0];
-            }
-            return answer;
+            // 문자열 회전: 맨 앞 문자를 맨 뒤로 이동
+            char first = sb[0];
+            sb.Remove(0, 1);
+            sb.Append(first);
         }
 
-        private bool IsValid(string s)
-        {
-            Stack<char> stack = new Stack<char>();
-            foreach (char c in s)
-            {
-                if (c == '(' || c == '{' || c == '[')
-                {
-                    stack.Push(c);
-                }
-                else
-                {
-                    if (stack.Count == 0)
-                        return false;
-                    char open = stack.Pop();
-                    if (!IsPair(open, c))
-                        return false;
-                }
-            }
-            return stack.Count == 0;
-        }
-
-        private bool IsPair(char open, char close)
-        {
-            return (open == '(' && close == ')') ||
-                   (open == '{' && close == '}') ||
-                   (open == '[' && close == ']');
-        }
+        return answer;
     }
+
+    private bool Check(string s, Stack<char> stack)
+    {
+        stack.Clear();
+        foreach (var item in s)
+        {
+            if (item == '[' || item == '(' || item == '{')
+                stack.Push(item);
+            else if (stack.Count == 0)
+                return false;
+            else if (stack.Peek() == '[' && item != ']')
+                return false;
+            else if (stack.Peek() == '(' && item != ')')
+                return false;
+            else if (stack.Peek() == '{' && item != '}')
+                return false;
+            else
+                stack.Pop();
+        }
+        return stack.Count == 0;
+    }
+}
