@@ -1,23 +1,8 @@
 using System;
-using System.Collections.Generic;
+using System.Linq;
 
 public class Solution {
-    public int solution(string[,] clothes)
-{
-    int answer = 1;
-    var clothesDict = new Dictionary<string, int>();
-    for (int i = 0; i < clothes.GetLength(0); i++)
-    {
-        string type = clothes[i, 1];
-        if (clothesDict.ContainsKey(type))
-            clothesDict[type]++;
-        else
-            clothesDict[type] = 1;
+    public int solution(string[,] clothes) {
+        return Enumerable.Range(0, clothes.GetLength(0)).Select(i => clothes[i,1]).GroupBy(p => p).Select(g => g.Count() + 1).Aggregate(1, (p, q) => p * q) - 1;
     }
-    foreach (var count in clothesDict.Values)
-    {
-        answer *= (count + 1);
-    }
-    return answer - 1;
-}
 }
