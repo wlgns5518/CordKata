@@ -1,35 +1,26 @@
 using System;
 
 public class Solution {
-    public string solution(string[] cards1, string[] cards2, string[] goal) {
-       int card1Count = 0;
-        int card2Count = 0;
-        int goalCount = 0;
-        while (goalCount != goal.Length)
+    public string solution(string[] cards1, string[] cards2, string[] goal)
+{
+    int index1 = 0, index2 = 0;
+
+    foreach (string word in goal)
+    {
+        if (index1 < cards1.Length && cards1[index1] == word)
         {
-            if (cards1[card1Count] == goal[goalCount])
-            {
-                card1Count++;
-                goalCount++;
-                if (card1Count == cards1.Length)
-                {
-                    card1Count = cards1.Length-1;
-                }
-            }
-            else if (cards2[card2Count] == goal[goalCount])
-            {
-                card2Count++;
-                goalCount++;
-                if(card2Count == cards2.Length)
-                {
-                    card2Count = cards2.Length-1;
-                }
-            }
-            else
-            {
-                return "No";
-            }
+            index1++;
         }
-        return "Yes";
+        else if (index2 < cards2.Length && cards2[index2] == word)
+        {
+            index2++;
+        }
+        else
+        {
+            return "No";
+        }
     }
+
+    return "Yes";
+}
 }
