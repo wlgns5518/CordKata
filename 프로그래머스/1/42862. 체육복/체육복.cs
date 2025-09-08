@@ -1,48 +1,46 @@
 using System;
 
 public class Solution {
-     public int solution(int n, int[] lost, int[] reserve)
-{
-    // 인덱스 가드용으로 n+2 사용
-    bool[] hasReserve = new bool[n + 2];
-    bool[] isLost = new bool[n + 2];
+    public int solution(int n, int[] lost, int[] reserve) {
 
-    for (int i = 0; i < reserve.Length; i++)
-        hasReserve[reserve[i]] = true;
-    for (int i = 0; i < lost.Length; i++)
-        isLost[lost[i]] = true;
+            int[] Person = new int[n];
+            for(int i = 0; i < n; i++)
+            {
+                Person[i] = 1;
+            }
 
-    // 1) 겹치는 학생 선처리: 자기 걸로 해결하고 빌려줄 여분도 없앰
-    for (int i = 1; i <= n; i++)
-    {
-        if (isLost[i] && hasReserve[i])
-        {
-            isLost[i] = false;
-            hasReserve[i] = false;
-        }
+
+            for(int i = 0; i < lost.Length; i++)
+            {
+                Person[lost[i] - 1]--;
+            }
+
+
+            for(int i = 0; i < reserve.Length; i++)
+            {
+                Person[reserve[i] - 1]++;
+            }
+
+
+            for(int i = 0; i < Person.Length - 1; i++)
+            {
+                if(Math.Abs(Person[i] - Person[i+1]) == 2)
+                {
+                    Person[i] = 1;
+                    Person[i + 1] = 1;
+                }
+            }
+
+
+            int count = 0;
+            for(int i = 0; i < Person.Length; i++)
+            {
+                if(Person[i] == 0)
+                {
+                    count++;
+                }
+            }
+
+            return Person.Length - count;
     }
-
-    // 2) 대여: 왼쪽 -> 오른쪽 우선
-    int answer = n;
-    for (int i = 1; i <= n; i++)
-    {
-        if (isLost[i])
-        {
-            if (hasReserve[i - 1])
-            {
-                hasReserve[i - 1] = false;
-            }
-            else if (hasReserve[i + 1])
-            {
-                hasReserve[i + 1] = false;
-            }
-            else
-            {
-                answer--;
-            }
-        }
-    }
-
-    return answer;
-}
 }
