@@ -1,39 +1,33 @@
 using System;
-using System.Linq;
+using System.Collections.Generic;
+
 
 public class Solution 
 {
     public int[] solution(int[] lottos, int[] win_nums)
 {
-    int[] answer = new int[2];
+    if (lottos == null || win_nums == null)
+        return new int[] { 6, 6 };
+
+    var winSet = new HashSet<int>(win_nums);
     int zeroCount = 0;
-    int correctCount = 0;
-    for(int i=0;i<6;i++)
+    int matchCount = 0;
+
+    foreach (var n in lottos)
     {
-        if (lottos[i] == 0)
+        if (n == 0)
         {
             zeroCount++;
             continue;
         }
-        for (int j=0;j<6;j++)
-        {
-            if(lottos[i] == win_nums[j])
-            {
-                correctCount++;
-                break;
-            }
-        }
+
+        if (winSet.Contains(n))
+            matchCount++;
     }
-    answer[1] = 7 - correctCount;
-    if (answer[1] >6)
-    {
-        answer[1] = 6;
-    }
-    answer[0] = 7 - correctCount - zeroCount;
-    if (answer[0] > 6)
-    {
-        answer[0] = 6;
-    }
-    return answer;
+
+    int bestRank = Math.Min(7 - (matchCount + zeroCount), 6);
+    int worstRank = Math.Min(7 - matchCount, 6);
+
+    return new[] { bestRank, worstRank };
 }
 }
