@@ -1,27 +1,32 @@
 using System;
-using System.Text;
 
 public class Solution {
-    public string solution(string X, string Y) {
-        string answer = "";
-        int[] a = new int[10];
-        int[] b = new int[10];
+    public string solution(string X, string Y)
+{
+    int[] countX = new int[10];
+    int[] countY = new int[10];
 
-        for(int i = 0; i < X.Length; i++) { a[(int)(X[i] - 48)]++; }
-        for(int i = 0; i < Y.Length; i++) { b[(int)(Y[i] - 48)]++; }
-        StringBuilder sb = new StringBuilder();
+    foreach (char ch in X)
+        countX[ch - '0']++;
 
-        for(int i = 9; i >= 0; i--)
-        {
-            while(a[i] > 0 && b[i] > 0){
-                sb.Append(i);
-                a[i]--;
-                b[i]--;
-            }
-        }
-        if("".Equals(sb.ToString())) { answer = "-1"; }
-        else if("0".Equals(sb.ToString().Substring(0, 1))) { answer = "0"; }
-        else { answer = sb.ToString(); }
-        return answer;
+    foreach (char ch in Y)
+        countY[ch - '0']++;
+
+    var sb = new System.Text.StringBuilder();
+
+    for (int d = 9; d >= 0; d--)
+    {
+        int c = Math.Min(countX[d], countY[d]);
+        if (c > 0)
+            sb.Append(new string((char)('0' + d), c));
     }
+
+    if (sb.Length == 0)
+        return "-1";
+
+    if (sb[0] == '0') // 모두 0인 경우
+        return "0";
+
+    return sb.ToString();
+}
 }
