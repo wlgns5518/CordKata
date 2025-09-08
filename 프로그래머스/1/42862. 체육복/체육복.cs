@@ -1,42 +1,48 @@
 using System;
-using System.Linq;
-using System.Collections.Generic;
 
-public class Solution
+public class Solution {
+     public int solution(int n, int[] lost, int[] reserve)
 {
-    public int solution(int n, int[] lost, int[] reserve)
+    // 인덱스 가드용으로 n+2 사용
+    bool[] hasReserve = new bool[n + 2];
+    bool[] isLost = new bool[n + 2];
+
+    for (int i = 0; i < reserve.Length; i++)
+        hasReserve[reserve[i]] = true;
+    for (int i = 0; i < lost.Length; i++)
+        isLost[lost[i]] = true;
+
+    // 1) 겹치는 학생 선처리: 자기 걸로 해결하고 빌려줄 여분도 없앰
+    for (int i = 1; i <= n; i++)
     {
-        int answer = n - lost.Length;
-        List<int> lostList = lost.ToList();
-        List<int> reserveList = reserve.ToList();
-        lostList.Sort();
-        reserveList.Sort();
-        for (int i = reserveList.Count - 1; i >= 0; i--)
+        if (isLost[i] && hasReserve[i])
         {
-            for (int j = lostList.Count - 1; j >= 0; j--)
-            {
-                if (reserveList[i] == lostList[j])
-                {
-                    answer++;
-                    lostList.RemoveAt(j);
-                    reserveList.RemoveAt(i);
-                    break;
-                }
-            }
+            isLost[i] = false;
+            hasReserve[i] = false;
         }
-        for (int i = reserveList.Count-1; i >= 0; i--)
-        {
-            for (int j = lostList.Count-1; j >= 0; j--)
-            {
-                if (reserveList[i] + 1 == lostList[j] || reserveList[i] - 1 == lostList[j])
-                {
-                    answer++;
-                    lostList.RemoveAt(j);
-                    reserveList.RemoveAt(i);
-                    break;
-                }
-            }
-        }
-        return answer;
     }
+
+    // 2) 대여: 왼쪽 -> 오른쪽 우선
+    int answer = n;
+    for (int i = 1; i <= n; i++)
+    {
+        if (isLost[i])
+        {
+            if (hasReserve[i - 1])
+            {
+                hasReserve[i - 1] = false;
+            }
+            else if (hasReserve[i + 1])
+            {
+                hasReserve[i + 1] = false;
+            }
+            else
+            {
+                answer--;
+            }
+        }
+    }
+
+    return answer;
+}
 }
