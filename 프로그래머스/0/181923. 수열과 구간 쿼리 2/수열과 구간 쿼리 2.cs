@@ -1,24 +1,26 @@
 using System;
+using System.Linq;
 
 public class Solution {
-    public int[] solution(int[] arr, int[,] queries)
-{
-    int[] answer = new int[queries.GetLength(0)];
-    for (int i = 0; i < queries.GetLength(0); i++)
+    public int[] solution(int[] arr, int[,] queries) 
     {
-        int minNum = 2000000;
-        for (int j = queries[i, 0]; j <= queries[i, 1]; j++)
+        int[] answer = new int[queries.GetLength(0)];
+        for(int i = 0; i < queries.GetLength(0); ++i)
         {
-            if (arr[j] > queries[i, 2])
-            {
-                if (minNum >= arr[j])
-                    minNum = arr[j];
-            }
+            int s = queries[i, 0];
+            int e = queries[i, 1];
+            int k = queries[i, 2];
+
+            int num = arr.Skip(s)
+                       .Take(e - s + 1)
+                       .Where(w => w > k)
+                       .DefaultIfEmpty(-1)
+                       .OrderBy(o => o)
+                       .First();
+
+            answer[i] = num;
         }
-        if (minNum == 2000000)
-            minNum = -1;
-        answer[i] = minNum;
+
+        return answer;
     }
-    return answer;
-}
 }
