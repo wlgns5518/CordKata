@@ -3,32 +3,23 @@ using System;
 public class Solution {
     public string solution(string code) {
         string answer = "";
-        int mode =0;
-        for(int i=0;i<code.Length;i++)
+        bool mode = false; // false = 0 true = 1
+
+        for(int i=0; i<code.Length; i++)
         {
-            if(mode == 0)
+            if(code[i] == '1')
             {
-                if(code[i]== '1')
-                {
-                    mode = 1;
-                    continue;
-                }
-                if(i%2==0)
-                    answer += code[i];
+                mode = !mode;
+                continue;                
             }
-            else
-            {
-                if(code[i] == '1')
-                {
-                    mode = 0;
-                    continue;
-                }
-                if(i%2!=0)
-                    answer += code[i];    
-            }
+
+            if(mode && i%2 == 1)
+                answer += code[i];
+            else if(!mode && i%2 == 0)
+                answer += code[i];
         }
-        if(answer == "")
-            return "EMPTY";
+        if(answer.Length == 0)
+            answer = "EMPTY";
         return answer;
     }
 }
