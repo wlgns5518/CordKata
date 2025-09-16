@@ -1,25 +1,21 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class Solution {
-    public int[] solution(int l, int r) {
-        List<int> result = new List<int>();
-        
-        for(int i = l; i <= r; i++) {
-            string s = i.ToString();
-            bool valid = true;
-            
-            foreach(char c in s) {
-                if(c != '0' && c != '5') {
-                    valid = false;
-                    break;
-                }
-            }
-            
-            if(valid) result.Add(i);
+    public int[] solution(int l, int r) 
+    {
+        while(l % 5 != 0)
+            ++l;
+
+        var list = new List<int>();
+        for(int i = l; i <= r; i += 5)
+        {
+            string str = i.ToString().Replace("0", "").Replace("5", "");
+            if(string.IsNullOrEmpty(str))
+                list.Add(i);
         }
-        
-        if(result.Count == 0) return new int[]{-1};
-        return result.ToArray();
+
+        return list.Count == 0 ? new int[1] { -1 } : list.ToArray();
     }
 }
