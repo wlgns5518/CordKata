@@ -1,12 +1,8 @@
 using System;
+using System.Linq;
 
 public class Solution {
-    public int[] solution(int start_num, int end_num) {
-        int[] answer = new int[start_num-end_num+1];
-        for(int i=0;i<answer.Length;i++)
-        {
-            answer[i] = start_num-i;
-        }
-        return answer;
+    public int[] solution(int start, int end) {
+        return Enumerable.Range(end, start - end + 1).Reverse().ToArray();
     }
 }
