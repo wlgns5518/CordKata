@@ -1,14 +1,23 @@
 using System;
-using System.Collections.Generic;
 
 public class Solution {
     public string[] solution(string[] todo_list, bool[] finished) {
-        var answer = new List<String>();
-        for(int i=0;i<finished.Length;i++)
-        {
-            if(finished[i] == false)
-                answer.Add(todo_list[i]);
+        // false인 항목 개수 세기
+        int count = 0;
+        for (int i = 0; i < finished.Length; i++) {
+            if (!finished[i]) count++;
         }
-        return answer.ToArray();
+
+        // false인 항목을 담을 배열 생성
+        string[] answer = new string[count];
+        int idx = 0;
+        for (int i = 0; i < finished.Length; i++) {
+            if (!finished[i]) {
+                answer[idx] = todo_list[i];
+                idx++;
+            }
+        }
+
+        return answer;
     }
 }
