@@ -1,14 +1,15 @@
 using System;
 
 public class Solution {
-    public int[] solution(int[] arr, int[,] queries) {
-        for(int i=0;i<queries.GetLength(0);i++)
+    public int[] solution(int[] arr, int[,] queries) 
+    {
+        for(int y = 0; y < queries.GetLength(0); ++y)
         {
-            for(int j=0;j<arr.Length;j++)
-            {
-                if(queries[i,0]<=j && j<= queries[i,1])
-                    arr[j]++;
-            }
+            int s = queries[y, 0];
+            int e = queries[y, 1];
+
+            for(int i = s; i <= e; ++i)
+                ++arr[i];
         }
         return arr;
     }
