@@ -1,36 +1,17 @@
 using System;
+using System.Linq;
 
 public class Solution {
-    public string[] solution(string[] str_list)
-{
-    int lIndex = Array.IndexOf(str_list, "l");
-    int rIndex = Array.IndexOf(str_list, "r");
-
-    // "l"과 "r"이 둘 다 없으면 빈 배열 반환
-    if (lIndex == -1 && rIndex == -1)
-        return Array.Empty<string>();
-
-    string[] answer;
-
-    if (rIndex == -1 || (lIndex != -1 && lIndex < rIndex))
+     public string[] solution(string[] str_list)
     {
-        // "l"이 먼저 나왔으면, 그 앞쪽 원소들 반환
-        answer = new string[lIndex];
-        for (int i = 0; i < lIndex; i++)
-        {
-            answer[i] = str_list[i];
-        }
-    }
-    else
-    {
-        // "r"이 먼저 나왔으면, 그 뒤쪽 원소들 반환
-        answer = new string[str_list.Length - (rIndex + 1)];
-        for (int i = 0; i < answer.Length; i++)
-        {
-            answer[i] = str_list[rIndex + 1 + i];
-        }
-    }
+        int lIndex = Array.IndexOf(str_list, "l");
+        int rIndex = Array.IndexOf(str_list, "r");
 
-    return answer;
-}
+        if (lIndex != -1 && (rIndex == -1 || lIndex < rIndex))
+            return str_list.Take(lIndex).ToArray();       // "l" 먼저 또는 "r" 없음
+        if (rIndex != -1)
+            return str_list.Skip(rIndex + 1).ToArray();   // "r" 먼저 또는 "l" 없음
+
+        return Array.Empty<string>();                     // 둘 다 없음
+    }
 }
