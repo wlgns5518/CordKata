@@ -3,8 +3,14 @@ using System.Linq;
 
 public class Solution {
     public int solution(string[] strArr) {
-        return strArr.GroupBy(g => g.Length)
-                     .OrderByDescending(o => o.Count())
-                     .First().Count();
+        int[] count = new int[31];
+        int answer = 0;
+
+        for(int i = 0;i < strArr.Length;i++)
+        {
+            count[strArr[i].Length]++;
+        }       
+
+        return count.Max();
     }
 }
