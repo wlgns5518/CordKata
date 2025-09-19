@@ -1,8 +1,11 @@
 using System;
 using System.Linq;
 public class Solution {
-    public int solution(int[] num_list) {
-        int answer = num_list.Length <= 10 ? num_list.Aggregate((a, b) => a * b) : num_list.Sum();
-        return answer;
-    }
+    public int solution(int[] num_list)
+{
+    if (num_list.Length >= 11)
+        return num_list.Sum();
+    else
+        return num_list.Aggregate((cur, next) => cur * next);
+}
 }
