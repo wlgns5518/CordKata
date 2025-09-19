@@ -1,19 +1,8 @@
 using System;
-
+using System.Linq;
 public class Solution {
     public int solution(int[] num_list) {
-        int answer = 0;
-        if(num_list.Length >=11)
-        {
-            for(int i=0;i<num_list.Length;i++)
-                answer += num_list[i];
-        }
-        else
-        {
-            answer++;
-            for(int i=0;i<num_list.Length;i++)
-                answer *= num_list[i];
-        }
+        int answer = num_list.Length <= 10 ? num_list.Aggregate((a, b) => a * b) : num_list.Sum();
         return answer;
     }
 }
