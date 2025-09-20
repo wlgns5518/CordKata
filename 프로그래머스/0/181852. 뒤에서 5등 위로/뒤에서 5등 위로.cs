@@ -3,6 +3,8 @@ using System.Linq;
 
 public class Solution {
     public int[] solution(int[] num_list) {
-        return num_list.OrderBy(o => o).Skip(5).ToArray();
+        Array.Sort(num_list);
+        int[] answer = num_list.Skip(5).ToArray();
+        return answer;
     }
 }
