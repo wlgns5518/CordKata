@@ -5,12 +5,16 @@ using System.Linq;
 public class Solution {
     public int solution(int[] rank, bool[] attendance)
 {
-    // Where를 사용하지 않고, 출석하지 않은 학생은 키를 매우 크게 만들어 정렬 뒤로 보냄
-    var top = Enumerable.Range(0, rank.Length)
-                        .OrderBy(i => attendance[i] ? rank[i] : int.MaxValue)
-                        .Take(3)
-                        .ToArray();
-
-    return top[0] * 10000 + top[1] * 100 + top[2];
+    int answer = 0;
+    Dictionary<int, int> dic = new Dictionary<int, int>();
+    for (int i = 0; i < rank.Length; i++)
+    {
+        if (attendance[i])
+            dic.Add(rank[i], i);
+    }
+    List<int> list = dic.Keys.ToList();
+    list.Sort();
+    answer = dic[list[0]] * 10000 + dic[list[1]] * 100 + dic[list[2]];
+    return answer;
 }
 }
