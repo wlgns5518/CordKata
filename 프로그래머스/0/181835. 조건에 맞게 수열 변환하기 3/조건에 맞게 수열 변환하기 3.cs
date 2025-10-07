@@ -1,18 +1,11 @@
 using System;
+using System.Linq;
 
 public class Solution {
     public int[] solution(int[] arr, int k) {
-        int[] answer = arr;
-        if(k%2 != 0)
-        {
-            for(int i=0;i<answer.Length;i++)
-                answer[i] *= k;
-        }
-        else
-        {
-            for(int i=0;i<answer.Length;i++)
-                answer[i] += k;
-        }
-        return answer;
+        if(k % 2 == 1)
+            return arr.Select(s => s * k).ToArray();
+        else 
+            return arr.Select(s => s + k).ToArray();
     }
 }
