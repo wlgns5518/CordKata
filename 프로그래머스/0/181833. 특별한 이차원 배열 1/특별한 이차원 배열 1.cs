@@ -1,19 +1,13 @@
 using System;
 
 public class Solution {
-    public int[,] solution(int n)
-{
-    int[,] answer = new int[n, n];
-    for (int i = 0; i < answer.GetLength(0); i++)
+    public int[,] solution(int n) 
     {
-        for (int j = 0; j < answer.GetLength(1); j++)
-        {
-            if (i == j)
-                answer[i,j] = 1;
-            else
-                answer[i,j] = 0;
-        }
+        int[,] answer = new int[n, n];
+
+        for(int i = 0; i < n; ++i)
+            answer[i, i] = 1;
+
+        return answer;
     }
-    return answer;
-}
 }
