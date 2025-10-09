@@ -5,16 +5,13 @@ public class Solution {
         int row = arr.GetLength(0);
         int col = arr.GetLength(1);
         int n = Math.Max(row,col);
-            
+        //어차피 0으로 들어가있음
         int[,] answer = new int[n,n];
-        for(int i=0;i<n;i++)
+        for(int i=0;i<row;i++)
         {
-            for(int j=0;j<n;j++)
+            for(int j=0;j<col;j++)
             {
-                if(i<row && j<col)
-                    answer[i,j] = arr[i,j];
-                else
-                    answer[i,j] = 0;
+                answer[i,j] = arr[i,j];
             }
         }
         return answer;
