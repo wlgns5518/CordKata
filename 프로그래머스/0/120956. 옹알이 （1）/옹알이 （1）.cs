@@ -2,17 +2,24 @@ using System;
 
 public class Solution {
     public int solution(string[] babbling) {
-        int answer = 0;
-        int num = 0;
-        for(int i=0;i<babbling.Length;i++)
+        string[] possible = { "aya", "ye", "woo", "ma" };
+        int count = 0;
+
+        foreach (string word in babbling)
         {
-            babbling[i] = babbling[i].Replace("aya","1");
-            babbling[i] = babbling[i].Replace("ye","1");
-            babbling[i] = babbling[i].Replace("woo","1");
-            babbling[i] = babbling[i].Replace("ma","1");
-            if(int.TryParse(babbling[i], out num))
-                answer++;
+            string temp = word;
+            foreach (string p in possible)
+            {
+                temp = temp.Replace(p, " ");
+            }
+
+            // 공백을 제거했을 때 빈 문자열이면 가능한 단어
+            if (temp.Trim().Length == 0)
+            {
+                count++;
+            }
         }
-        return answer;
+
+        return count;
     }
 }
