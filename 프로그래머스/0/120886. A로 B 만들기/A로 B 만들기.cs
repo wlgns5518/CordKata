@@ -2,19 +2,23 @@ using System;
 
 public class Solution {
     public int solution(string before, string after) {
-        // 문자열을 문자 배열로 변환
-        char[] beforeArr = before.ToCharArray();
-        char[] afterArr = after.ToCharArray();
+        int[] count = new int[26]; // a~z
 
-        // 문자 배열 정렬
-        Array.Sort(beforeArr);
-        Array.Sort(afterArr);
+        // before 문자열 문자 개수 증가
+        foreach (char c in before) {
+            count[c - 'a']++;
+        }
 
-        // 정렬 후 문자열로 변환
-        string sortedBefore = new string(beforeArr);
-        string sortedAfter = new string(afterArr);
+        // after 문자열 문자 개수 감소
+        foreach (char c in after) {
+            count[c - 'a']--;
+        }
 
-        // 비교 후 결과 반환
-        return sortedBefore == sortedAfter ? 1 : 0;
+        // 하나라도 0이 아니면 만들 수 없음
+        foreach (int c in count) {
+            if (c != 0) return 0;
+        }
+
+        return 1;
     }
 }
