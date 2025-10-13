@@ -1,27 +1,26 @@
 using System;
 using System.Linq;
+using System.Collections.Generic;
 
-public class Solution {
-    public int[] solution(int[,] score) {
-        int n = score.GetLength(0);
-        double[] avg = new double[n];
-        int[] rank = new int[n];
-        
-        // 평균 계산
-        for (int i = 0; i < n; i++) {
-            avg[i] = (score[i, 0] + score[i, 1]) / 2.0;
+public class Solution
+{
+    public int[] solution(int[,] score)
+    {
+        List<int> scoreList = new List<int>();
+        List<int> rankList = new List<int>();
+
+        for(int i=0; i<score.GetLength(0); i++)
+        {
+            scoreList.Add(score[i, 0] + score[i, 1]);
         }
 
-        // 등수 계산
-        for (int i = 0; i < n; i++) {
-            rank[i] = 1; // 기본 등수는 1등
-            for (int j = 0; j < n; j++) {
-                if (avg[j] > avg[i]) {
-                    rank[i]++;
-                }
-            }
+        List<int> sortScore = scoreList.OrderByDescending(x => x).ToList();
+
+        for(int i=0; i<sortScore.Count; i++)
+        {
+            rankList.Add(sortScore.FindIndex(x => x == scoreList[i]) + 1);
         }
 
-        return rank;
+        return rankList.ToArray();
     }
 }
