@@ -1,20 +1,37 @@
 using System;
 
 public class Solution {
-    public int solution(int n) {
-        int count = 0;
-        int num = 0;
+    public int solution(int n)
+{
+    int answer = 0;
 
-        while (count < n)
+    for (int i = 0; i < n; i++)
+    {
+        answer++;
+
+        // 3의 배수이거나 숫자 3이 포함되어 있으면 계속 건너뜀
+        while (answer % 3 == 0 || HasThree(answer))
         {
-            num++;
-            // 3의 배수거나 숫자 3이 포함되어 있으면 제외
-            if (num % 3 == 0 || num.ToString().Contains("3"))
-                continue;
-
-            count++;
+            answer++;
         }
-
-        return num;
     }
+
+    return answer;
+}
+
+// 숫자 안에 3이 포함되어 있는지 검사하는 함수
+bool HasThree(int num)
+{
+    while (num > 0)
+    {
+        if (num % 10 == 3) // 끝자리 숫자가 3이면 true
+            return true;
+
+        num /= 10; // 다음 자리로 이동
+    }
+
+    return false;
+}
+
+
 }
