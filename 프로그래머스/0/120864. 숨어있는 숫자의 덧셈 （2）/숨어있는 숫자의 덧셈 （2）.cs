@@ -1,31 +1,20 @@
 using System;
+using System.Text.RegularExpressions;
 
-public class Solution {
-    public int solution(string my_string)
+public class Solution
 {
-    int sum = 0;
-    string num = ""; // 숫자 누적용
-
-    foreach (char c in my_string)
+    public int solution(string my_string)
     {
-        if (char.IsDigit(c))
+        // 숫자가 아닌 문자를 모두 공백으로 치환
+        string replaced = Regex.Replace(my_string, @"[^\d]", " ");
+        
+        int sum = 0;
+        // 공백으로 split 후 숫자가 있는 경우 합산
+        foreach (string s in replaced.Split(' ', StringSplitOptions.RemoveEmptyEntries))
         {
-            num += c; // 숫자이면 누적
+            sum += int.Parse(s);
         }
-        else
-        {
-            if (num != "") // 숫자 스트링 끝나면 합산
-            {
-                sum += int.Parse(num);
-                num = "";
-            }
-        }
+
+        return sum;
     }
-
-    // 마지막 숫자 처리
-    if (num != "")
-        sum += int.Parse(num);
-
-    return sum;
-}
 }
