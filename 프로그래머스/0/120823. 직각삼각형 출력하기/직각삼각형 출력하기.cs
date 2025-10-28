@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 
 public class Example
 {
@@ -11,11 +12,11 @@ public class Example
 
         int n = Int32.Parse(s[0]);
 
-        for(int i=1;i<=n;i++)
+        StringBuilder sb = new StringBuilder();
+        for (int i = 1; i <= n; i++)
         {
-            for(int j=0;j<i;j++)
-                Console.Write("*");
-            Console.WriteLine();
+            sb.Append('*');           // 한 줄에 별 추가
+            Console.WriteLine(sb);    // 현재 상태 출력
         }
     }
 }
