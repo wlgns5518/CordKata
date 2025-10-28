@@ -6,8 +6,7 @@ public class Solution {
         var answer = new StringBuilder();
         for(int i=0;i<my_string.Length;i++)
         {
-            for(int j=0;j<n;j++)
-                answer.Append(my_string[i]);
+            answer.Append(my_string[i],n);
         }
         return answer.ToString();
     }
