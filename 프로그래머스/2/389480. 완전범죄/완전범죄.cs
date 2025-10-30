@@ -1,40 +1,44 @@
 using System;
 
 public class Solution {
+    int items;
+    int[,] info;
+    int n, m;
+    int minA;
+    bool[,,] visited; // 메모이제이션
+
     public int solution(int[,] info, int n, int m) {
-        int items = info.GetLength(0); // 물건 개수
-        bool[,] dp = new bool[n, m];
-        dp[0, 0] = true;
+        this.items = info.GetLength(0);
+        this.info = info;
+        this.n = n;
+        this.m = m;
+        minA = int.MaxValue;
 
-        for (int i = 0; i < items; i++) {
-            bool[,] next = new bool[n, m];
-            int addA = info[i, 0];
-            int addB = info[i, 1];
+        visited = new bool[items + 1, n, m]; // idx, aSum, bSum
 
-            for (int a = 0; a < n; a++) {
-                for (int b = 0; b < m; b++) {
-                    if (!dp[a, b]) continue;
+        DFS(0, 0, 0);
 
-                    // A가 훔치는 경우
-                    int na = a + addA;
-                    if (na < n) next[na, b] = true;
+        return minA == int.MaxValue ? -1 : minA;
+    }
 
-                    // B가 훔치는 경우
-                    int nb = b + addB;
-                    if (nb < m) next[a, nb] = true;
-                }
-            }
+    void DFS(int idx, int aSum, int bSum) {
+        // 경찰 잡힘
+        if (aSum >= n || bSum >= m) return;
 
-            dp = next;
+        // 이미 방문한 상태면 탐색 X
+        if (visited[idx, aSum, bSum]) return;
+        visited[idx, aSum, bSum] = true;
+
+        // 모든 물건 훔침
+        if (idx == items) {
+            minA = Math.Min(minA, aSum);
+            return;
         }
 
-        // 가능한 최소 A의 흔적합 찾기
-        for (int a = 0; a < n; a++) {
-            for (int b = 0; b < m; b++) {
-                if (dp[a, b]) return a;
-            }
-        }
+        // A가 훔치기
+        DFS(idx + 1, aSum + info[idx,0], bSum);
 
-        return -1; // 불가능한 경우
+        // B가 훔치기
+        DFS(idx + 1, aSum, bSum + info[idx,1]);
     }
 }
